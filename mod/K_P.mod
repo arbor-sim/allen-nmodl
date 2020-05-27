@@ -22,8 +22,6 @@ PARAMETER	{
 
 ASSIGNED	{
 	v	(mV)
-	ek	(mV)
-	ik	(mA/cm2)
 	g	(S/cm2)
 	celsius (degC)
 	mInf
@@ -44,28 +42,28 @@ BREAKPOINT	{
 }
 
 DERIVATIVE states	{
-	rates()
+	rates(v)
 	m' = (mInf-m)/mTau
 	h' = (hInf-h)/hTau
 }
 
 INITIAL{
-	rates()
+	rates(v)
 	m = mInf
 	h = hInf
 }
 
-PROCEDURE rates() {
-  LOCAL qt
-  qt = 2.3^((celsius-21)/10)
-	UNITSOFF
-		mInf =  1 / (1 + exp(-(v - (-14.3 + vshift)) / 14.6))
-    if (v < -50 + vshift){
-    	mTau = tauF * (1.25+175.03*exp(-(v - vshift) * -0.026))/qt
-    } else {
-      mTau = tauF * (1.25+13*exp(-(v - vshift) * 0.026))/qt
-    }
-		hInf =  1/(1 + exp(-(v - (-54 + vshift))/-11))
-		hTau =  (360+(1010+24*(v - (-55 + vshift)))*exp(-((v - (-75 + vshift))/48)^2))/qt
-	UNITSON
+PROCEDURE rates(v) {
+       LOCAL qt
+       qt = 2.3^((celsius-21)/10)
+       UNITSOFF
+       mInf =  1 / (1 + exp(-(v - (-14.3 + vshift)) / 14.6))
+       if (v < -50 + vshift){
+           mTau = tauF * (1.25+175.03*exp(-(v - vshift) * -0.026))/qt
+       } else {
+           mTau = tauF * (1.25+13*exp(-(v - vshift) * 0.026))/qt
+       }
+       hInf =  1/(1 + exp(-(v - (-54 + vshift))/-11))
+       hTau =  (360+(1010+24*(v - (-55 + vshift)))*exp(-((v - (-75 + vshift))/48)^2))/qt
+       UNITSON
 }

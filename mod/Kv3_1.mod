@@ -19,8 +19,6 @@ PARAMETER	{
 
 ASSIGNED	{
 	v	(mV)
-	ek	(mV)
-	ik	(mA/cm2)
 	g	(S/cm2)
 	mInf
 	mTau
@@ -37,16 +35,16 @@ BREAKPOINT	{
 }
 
 DERIVATIVE states	{
-	rates()
+	rates(v)
 	m' = (mInf-m)/mTau
 }
 
 INITIAL{
-	rates()
+	rates(v)
 	m = mInf
 }
 
-PROCEDURE rates(){
+PROCEDURE rates(v){
 	UNITSOFF
 		mInf =  1/(1+exp(((v -(18.700 + vshift))/(-9.700))))
 		mTau =  0.2*20.000/(1+exp(((v -(-46.560 + vshift))/(-44.140))))

@@ -18,8 +18,6 @@ PARAMETER	{
 
 ASSIGNED	{
 	v	(mV)
-	ek	(mV)
-	ik	(mA/cm2)
 	g	(S/cm2)
 	celsius (degC)
 	mInf
@@ -39,16 +37,16 @@ BREAKPOINT	{
 }
 
 DERIVATIVE states	{
-	rates()
+	rates(v)
 	m' = (mInf - m) / mTau
 }
 
 INITIAL{
-	rates()
+	rates(v)
 	m = mInf
 }
 
-PROCEDURE rates() {
+PROCEDURE rates(v) {
   LOCAL qt
   qt = 2.3^((celsius-30)/10)
   mAlpha = 0.007 * exp( (6 * 0.4 * (v - (-48))) / 26.12 )

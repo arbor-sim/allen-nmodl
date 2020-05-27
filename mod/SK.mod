@@ -18,13 +18,10 @@ PARAMETER {
           v            (mV)
           gbar = .000001 (mho/cm2)
           zTau = 1              (ms)
-          ek           (mV)
-          cai          (mM)
 }
 
 ASSIGNED {
          zInf
-         ik            (mA/cm2)
          g	       (S/cm2)
 }
 
@@ -43,7 +40,7 @@ DERIVATIVE states {
         z' = (zInf - z) / zTau
 }
 
-PROCEDURE rates(ca(mM)) {
+PROCEDURE rates(ca) {
           if(ca < 1e-7){
 	              ca = ca + 1e-07
           }

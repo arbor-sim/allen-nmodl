@@ -19,8 +19,6 @@ PARAMETER	{
 
 ASSIGNED	{
 	v	(mV)
-	ena	(mV)
-	ina	(mA/cm2)
 	g	(S/cm2)
 	celsius (degC)
 	mInf
@@ -36,22 +34,22 @@ STATE	{
 
 BREAKPOINT	{
 	SOLVE states METHOD cnexp
-	rates()
+	rates(v)
 	g = gbar*mInf*h
 	ina = g*(v-ena)
 }
 
 DERIVATIVE states	{
-	rates()
+	rates(v)
 	h' = (hInf-h)/hTau
 }
 
 INITIAL{
-	rates()
+	rates(v)
 	h = hInf
 }
 
-PROCEDURE rates(){
+PROCEDURE rates(v){
   LOCAL qt
   qt = 2.3^((celsius-21)/10)
 
